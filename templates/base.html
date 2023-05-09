@@ -1,0 +1,50 @@
+<!-- base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Django Blog{% endblock %}</title>
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.7/dist/tailwind.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {{ ckeditor_css }}
+    {{ ckeditor_js }}
+    {{ ckeditor_config }}
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-gray-800 py-2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    
+                    <a class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="{% url 'post_list' %}">Home</a>
+                </div>
+                <div class="flex">
+                    {% if user.is_authenticated %}
+                        <a class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="{% url 'post_create' %}">New Post</a>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</button>
+                        </form>
+                    {% else %}
+                        <a class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="{% url 'login' %}">Login</a>
+                        <a class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="{% url 'register' %}">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="w-100%">
+        {% include 'messages.html' %}
+     </div>
+
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            {% block content %}
+            
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

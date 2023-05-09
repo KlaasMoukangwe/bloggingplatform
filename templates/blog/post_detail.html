@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ post.title }}</h2>
+  <p class="my-4">{{ post.content|safe|escape }}</p>
+  <p>Posted by {{ post.author }} on {{ post.date_posted }}</p>
+  {% if request.user.is_authenticated %}
+    <div class="flex justify-between items-center my-4">
+      <div class="btn-group">
+        <a href="{% url 'post_update' post.id %}" class="btn btn-outline-info mr-2">Edit</a>
+        <form method="post" action="{% url 'post_delete' post.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-danger">Delete</button>
+        </form>
+      </div>
+      {% include 'blog/like_form.html' %}
+    </div>
+    <hr>
+    {% include 'blog/comment_form.html' %}
+  {% endif %}
+{% endblock content %}

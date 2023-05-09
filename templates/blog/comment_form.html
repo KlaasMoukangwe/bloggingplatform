@@ -1,0 +1,14 @@
+<div>
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'post_comment' post.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="comment">Add a Comment:</label>
+            <textarea class="form-control" id="comment" name="content" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post Comment</button>
+    </form>
+{% else %}
+    <p>Please <a href="{% url 'login' %}">log in</a> to leave a comment.</p>
+{% endif %}
+</div>

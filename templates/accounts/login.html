@@ -1,0 +1,25 @@
+<!-- login.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="max-w-sm mx-auto">
+    <h1 class="text-2xl font-bold text-center mb-6">Login</h1>
+    {% if form.errors %}
+      <p class="text-red-500 mb-4">There was an error with your submission:</p>
+      <ul>
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <label for="{{ form.username.id_for_label }}" class="block mb-2 font-bold text-gray-700">Username:</label>
+      {{ form.username }}
+      <label for="{{ form.password.id_for_label }}" class="block mb-2 font-bold text-gray-700">Password:</label>
+      {{ form.password }}
+      <button type="submit" class="block mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
+    </form>
+  </div>
+{% endblock %}
